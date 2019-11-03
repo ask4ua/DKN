@@ -3,15 +3,15 @@ Tasks
 ### 1. sha256 sum
 * create file with name `docker` with following content
 ```
-docker-shmoker
+sha256
 ```
 * take sha256 checksum from file
 #### Answer: sha256  checksum of mentioned file
 
 ### 2. ubuntu
-* run ubuntu container in interactive mode
-* take sha256 checksum of file `/etc/debian_release`
-#### Answer: sha256 checksum of `/etc/debian_release`
+* run ubuntu:18.04 container in interactive mode
+* take sha256 checksum of file `/etc/lsb_release`
+#### Answer: sha256 checksum of `/etc/lsb_release`
 
 ### 3. centos
 * run centos container in interactive mode
@@ -24,7 +24,7 @@ docker-shmoker
 * check content `/etc/passwd`
 
 #### Answer:
-* one-liner command that print number of records in `/etc/passwd` in alpine container.
+* one-line command that print number of records in `/etc/passwd` of alpine container.
 * command should be run from docker host itself and begin from `docker run`
 
 ### 5. busybox
@@ -72,7 +72,6 @@ int main () {
 * build it, run it
 * **take sha256sum**
 * detach from container
-* see last 2 containers (read about ps --last keys)
 * check last 2 container sizes ( refrehs ps -s keys)
 * read about `docker cp` command
 * copy `/hello` file from each container locally into `hello_centos`, `hello_ubuntu`
@@ -80,7 +79,6 @@ int main () {
 * copy `hello_ubuntu` into centos container
 * run both commands, to check if works
 * optionally: copy, run both commands in busybox, alpine containers
-*
 
 #### Answer:
 * sha256 sum of hello binary in ubuntu
