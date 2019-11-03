@@ -5,7 +5,7 @@ Tasks
 ```
 sha256
 ```
-* take sha256 checksum from file
+* take sha256 checksum of the  file
 #### Answer: sha256  checksum of mentioned file
 
 ### 2. ubuntu
