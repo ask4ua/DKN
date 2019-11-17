@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+  namespace: student99
+spec:
+  containers:
+  - name: webapp
+    image: docker.ask4ua.com/webapp
+    ports:
+    - containerPort: 80
+    imagePullPolicy: Always
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 15
+      periodSeconds: 20
+#    env:
+#    - name: DBHOST
+#      valueFrom:
+#        configMapKeyRef:
+#          name: webapp-configmap
+#          key: databasehost

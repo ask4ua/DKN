@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+   app: webapp
+  namespace: student99
+  name: webapp
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2        # how many pods we can add at a time
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      # affinity:
+      #   podAntiAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #     - podAffinityTerm:
+      #         labelSelector:
+      #           matchExpressions:
+      #           - key: app
+      #             operator: In
+      #             values:
+      #             - webapp
+      #         topologyKey: kubernetes.io/hostname
+      #       weight: 100
+      containers:
+      - name: webapp
+        image: docker.ask4ua.com/webapp
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+        
