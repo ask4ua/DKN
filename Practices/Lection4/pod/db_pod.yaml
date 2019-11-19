@@ -8,6 +8,6 @@ metadata:
 spec:
   containers:
   - name: db
-    image: docker.ask4ua.com/db
+    image: vovolkov/db
     ports:
     - containerPort: 5432
