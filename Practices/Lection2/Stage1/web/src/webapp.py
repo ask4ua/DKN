@@ -54,14 +54,14 @@ class MyHandler(BaseHTTPRequestHandler):
         <html><head><title>MyWebApp</title></head>
             <body>
                 <h2>
-                <p>Serving host <font color="%s">%s</font></p>
+                <p>Serving host %s</p>
                 <p></p>
                 <p>Time: %s</p>
                 <p>Accessed path: %s</p>
                 <p>Writing to DB status: %s</p></h2>
             </body>
         </html>
-        ''' % (str(hex(int("0x"+str(HOST_NAME[0:5]),16)^0xFFFFFF)), str(HOST_NAME), str(date), str(path), str(dbStatusHTML))
+        ''' % (str(HOST_NAME), str(date), str(path), str(dbStatusHTML))
 
         return bytes(content, 'UTF-8')
 
