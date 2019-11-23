@@ -34,7 +34,7 @@ spec:
       #       weight: 100
       containers:
       - name: webapp
-        image: docker.ask4ua.com/webapp
+        image: vovolkov/webapp
         ports:
         - containerPort: 80
         imagePullPolicy: Always
