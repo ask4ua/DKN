@@ -94,7 +94,10 @@ if __name__ == '__main__':
         DBPORT=str(5432)
 
     print(time.asctime(),"webapp: Initiating connection to DB")
-    db_session = psql.db.db(user=DBUSER, password=DBPASS,host=DBHOST,database=DBNAME)
+    try:
+        db_session = psql.db.db(user=DBUSER, password=DBPASS,host=DBHOST,database=DBNAME)
+    except BaseException as err:
+        pass
 
     try:
         httpd.serve_forever()

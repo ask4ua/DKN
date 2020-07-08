@@ -33,6 +33,7 @@ class db:
         
         except BaseException as err:
             print("DB ERROR: Something is wrong in connecting to DB: " + str(err.__str__()))
+            raise Exception
     
     def writelogtodb(self,date,logmessage):
         try:
@@ -41,3 +42,7 @@ class db:
              return False
         
         return True
+
+    def close_db(self):
+        self.sql_session.close()
+        print("Db connection closed")
