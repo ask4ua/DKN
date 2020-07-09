@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+   app: webapp
+  namespace: student99
+  name: webapp
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2        # how many pods we can add at a time
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      initContainers:
+      - name: pingdb
+        envFrom:
+        - secretRef:
+            name: webapp-secret
+        - configMapRef:
+            name: webapp-configmap
+        image: vovolkov/webapp
+        command: ["python3","-u","/app/pingdb.py"]
+        NodeName: "prima"
+      containers:
+      - name: webapp
+        image: vovolkov/webapp
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: webapp-configmap
+        - secretRef:
+            name: webapp-secret
+
