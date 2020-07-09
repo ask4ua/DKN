@@ -20,6 +20,7 @@ spec:
       labels:
         app: webapp
     spec:
+      nodeName: "prima"
       initContainers:
       - name: pingdb
         envFrom:
@@ -29,7 +30,6 @@ spec:
             name: webapp-configmap
         image: vovolkov/webapp
         command: ["python3","-u","/app/pingdb.py"]
-        NodeName: "prima"
       containers:
       - name: webapp
         image: vovolkov/webapp
