@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-data:
-  databasehost: "webappdb"
-metadata:
-  name: webapp-configmap
-  namespace: student99

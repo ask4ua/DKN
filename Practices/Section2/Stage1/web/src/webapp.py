@@ -11,13 +11,21 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 HOST_NAME = str(socket.gethostname())
 PORT_NUMBER = 80
 
+def write_log_to_db(logmessage):
+    try:
+        if (db_session.writelogtodb(time.asctime(), logmessage)):
+            return True
+    except BaseException:
+        pass
+
+    return False
 
 class MyHandler(BaseHTTPRequestHandler):
     def do_HEAD(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-
+    
     def do_GET(self):
         paths = {
             '/': {'status': 200},
@@ -34,7 +42,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
         dbStatus=""
 
-        if(db_session.writelogtodb(time.asctime(), "Accessed path \"" + str(path) + "\" via server name \"" + str(HOST_NAME) + "\"")):
+        if(write_log_to_db("Accessed path \"" + str(path) + "\" via server name \"" + str(HOST_NAME) + "\"")):
             dbStatus="Success"
             dbStatusHTML="<font color=\"green\"><b>Success</b></font>"
         else:
