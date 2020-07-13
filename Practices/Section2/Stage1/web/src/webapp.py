@@ -107,6 +107,7 @@ if __name__ == '__main__':
     except BaseException as err:
         pass
 
+    print(time.asctime(),"webapp: Starting httpd")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

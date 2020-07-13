@@ -11,14 +11,35 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 HOST_NAME = str(socket.gethostname())
 PORT_NUMBER = 80
 
+def connect_to_db():
+    connection_status=False
+
+    DBUSER = os.environ.get('DBUSER')
+    DBPASS = os.environ.get('DBPASS')
+    DBNAME = os.environ.get('DBNAME')
+    DBHOST = os.environ.get('DBHOST')
+
+    if not DBHOST:
+        DBHOST="127.0.0.1"
+    DBPORT = os.environ.get('DBPORT')
+    if not DBPORT:
+        DBPORT=str(5432)
+
+    print(time.asctime(),"webapp: Initiating connection to DB")
+    
+    # Exception if connection failed
+    db_session = psql.db.db(user=DBUSER, password=DBPASS,host=DBHOST,database=DBNAME)
+    return db_session
+
 def write_log_to_db(logmessage):
     try:
-        if (db_session.writelogtodb(time.asctime(), logmessage)):
-            return True
-    except BaseException:
-        pass
+        db_session=connect_to_db()
+        db_session.writelogtodb(time.asctime(), logmessage)):
+        db_session.close_db()
+    except:
+        return False
+    return True
 
-    return False
 
 class MyHandler(BaseHTTPRequestHandler):
     def do_HEAD(self):
@@ -89,29 +110,11 @@ if __name__ == '__main__':
     server_class = HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
     print(time.asctime(), 'webapp: HTTP Server Starts')
-    
-    DBUSER = os.environ.get('DBUSER')
-    DBPASS = os.environ.get('DBPASS')
-    DBNAME = os.environ.get('DBNAME')
-    DBHOST = os.environ.get('DBHOST')
-
-    if not DBHOST:
-        DBHOST="127.0.0.1"
-    DBPORT = os.environ.get('DBPORT')
-    if not DBPORT:
-        DBPORT=str(5432)
-
-    print(time.asctime(),"webapp: Initiating connection to DB")
-    try:
-        db_session = psql.db.db(user=DBUSER, password=DBPASS,host=DBHOST,database=DBNAME)
-    except BaseException as err:
-        pass
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
 
-    db_session.close_db()
     httpd.server_close()
     print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
