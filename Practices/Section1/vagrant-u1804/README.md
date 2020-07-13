@@ -6,5 +6,5 @@ vagrant ssh
 #Status
 vagrant status
 
-# Remove
-vagrant sta
+# Shutdown
+vagrant halt
