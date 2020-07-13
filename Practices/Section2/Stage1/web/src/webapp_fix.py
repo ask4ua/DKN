@@ -34,7 +34,7 @@ def connect_to_db():
 def write_log_to_db(logmessage):
     try:
         db_session=connect_to_db()
-        db_session.writelogtodb(time.asctime(), logmessage)):
+        db_session.writelogtodb(time.asctime(), logmessage)
         db_session.close_db()
     except:
         return False

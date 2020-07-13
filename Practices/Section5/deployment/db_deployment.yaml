@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+   app: db
+  namespace: student99
+  name: db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+
+    spec:
+      containers:
+      - name: db
+        image: vovolkov/db
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: webapp-secret
+              key: DBUSER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: webapp-secret
+              key: DBPASS
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: webapp-secret
+              key: DBNAME
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data/
+            name: db-volume
+      volumes:
+      - name: db-volume
+        emptyDir: {}

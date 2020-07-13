@@ -20,19 +20,13 @@ spec:
       labels:
         app: webapp
     spec:
-      nodeName: "prima"
-      initContainers:
-      - name: pingdb
-        envFrom:
-        - secretRef:
-            name: webapp-secret
-        - configMapRef:
-            name: webapp-configmap
-        image: vovolkov/webapp
-        command: ["python3","-u","/app/pingdb.py"]
+      tolerations:
+      - key: noapp
+        operator: "Exists"
+        effect: "NoExecute"
       containers:
       - name: webapp
-        image: vovolkov/webapp
+        image: vovolkov/webapp:fix
         ports:
         - containerPort: 80
         imagePullPolicy: Always
