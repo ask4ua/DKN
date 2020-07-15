@@ -9,4 +9,4 @@ ENV DBHOST='db' DBPORT='5432'
 ARG APPDIR='/app'
 VOLUME ${APPDIR}
 COPY src ${APPDIR}
-ENTRYPOINT ["python3","-u","/app/webapp.py"]
+CMD ["python3","-u","/app/webapp.py"]
