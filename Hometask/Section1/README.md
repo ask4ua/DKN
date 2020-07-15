@@ -10,8 +10,8 @@ sha256
 
 ### 2. ubuntu
 * run ubuntu:18.04 container in interactive mode
-* take sha256 checksum of file `/etc/lsb_release`
-#### Answer: sha256 checksum of `/etc/lsb_release`
+* take sha256 checksum of file `/etc/lsb-release`
+#### Answer: sha256 checksum of `/etc/lsb-release`
 
 ### 3. centos
 * run centos container in interactive mode
@@ -72,7 +72,7 @@ int main () {
 * build it, run it
 * **take sha256sum**
 * detach from container
-* check last 2 container sizes ( refrehs ps -s keys)
+* check last 2 container sizes ( refresh ps -s keys)
 * read about `docker cp` command
 * copy `/hello` file from each container locally into `hello_centos`, `hello_ubuntu`
 * copy `hello_centos` into ubuntu container
