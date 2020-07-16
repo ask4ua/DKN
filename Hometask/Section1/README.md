@@ -72,7 +72,7 @@ int main () {
 * build it, run it
 * **take sha256sum**
 * detach from container
-* check last 2 container sizes ( refresh ps -s keys)
+* check last 2 container sizes (check latest docker ps -s)
 * read about `docker cp` command
 * copy `/hello` file from each container locally into `hello_centos`, `hello_ubuntu`
 * copy `hello_centos` into ubuntu container
