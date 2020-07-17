@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   labels:
    app: webapp
-  namespace: student99
   name: webapp
 spec:
   replicas: 2

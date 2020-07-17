@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   labels:
    app: db
-  namespace: student99
   name: db
 spec:
   replicas: 1

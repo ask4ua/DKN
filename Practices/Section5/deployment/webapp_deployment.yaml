@@ -2,8 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-   app: webapp
-  namespace: student99
+   app: webapp 
   name: webapp
 spec:
   replicas: 2

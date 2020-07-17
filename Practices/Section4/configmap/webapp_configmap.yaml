@@ -4,4 +4,4 @@ data:
   DBHOST: "webappdb"
 metadata:
   name: webapp-configmap
-  namespace: student99
+  
