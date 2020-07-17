@@ -10,4 +10,4 @@ spec:
   type: NodePort
   ports:
      - port: 80
-       nodePort: 32099
+       nodePort: "help: 32000 + StudentNum"
