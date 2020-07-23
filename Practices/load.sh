@@ -1,16 +1,15 @@
 #!/bin/bash
 pods_check(){
-	kubectl get pods
-	kubectl logs webapp | tail -n 5
-	kubectl describe pod webapp | tail -n 5
-
 	while true
 	do
+	    kubectl get pods
+		kubectl logs webapp | tail -n 5
+		kubectl describe pod webapp | tail -n 5
+		
 		if kubectl get pod/webapp | grep -i running > /dev/null
 		then
 			break
 		fi
-		pods_check
 		sleep 1
 	done
 
@@ -25,7 +24,7 @@ curl_check(){
 	while true
 	do
 	 	echo "another try to get http from webapp"
-		if `curl -X GET 10.5.11.203:320${NUM}`
+		if curl -X GET 10.5.11.203:320${NUM} >> /dev/null 2>&1
 		then
 			curl -X GET 10.5.11.203:320${NUM}
 			sleep 5
