@@ -10,15 +10,12 @@ pods_delete(){
 	kubectl delete pod db
 }
 
-
+NUM=${USER:7:2}
+echo "NUM=$NUM"
+find ./ -name "*.y*ml" -exec sed -i -e "s/32000/320$NUM/g" {} \;
 
 while true
 do
-	NUM=${USER:7:2}
-	echo "NUM=$NUM"
-	git stash drop
-	git pull
-	find ./ -name "*.y*ml" -exec sed -i -e "s/32000/320$NUM/g" {} \;
 	sleep 10
 	kubectl create namespace $USER
 	kubectl get pods -A
@@ -43,6 +40,7 @@ do
 	 	echo "another try to get http from webapp"
 		if `curl -X GET 10.5.11.203:320${NUM}`
 		then
+			curl -X GET 10.5.11.203:320${NUM}
 			break
 		else
 			pods_check
