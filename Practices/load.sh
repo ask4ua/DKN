@@ -1,4 +1,17 @@
 #!/bin/bash
+pods_check(){
+	kubectl get pods
+	kubectl logs webapp
+	kubectl describe pod webapp
+}
+
+pods_delete(){
+	kubectl delete pod webapp
+	kubectl delete pod db
+}
+
+
+
 while true
 do
 	NUM=${USER:7:2}
@@ -18,12 +31,9 @@ do
 	kubectl apply -f Section4/service/webappdb_service.yaml
 	kubectl apply -f Section4/service/webapp_service.yaml
 	kubectl apply -f Section4/secret/webapp_secret.yaml
-	kubectl get pods
-	kubectl logs webapp
-	kubectl describe pod webapp
+	pods_check
 	sleep 10
-	kubectl delete pod webapp
-	kubectl delete pod db
+	pods_delete
 	kubectl apply -f Section4/pod/webapp_pod_configmap_secret_init.yaml
 	kubectl apply -f Section4/pod/db_pod_secret_volume.yaml
 	RETRY_CYCLES=100
@@ -35,9 +45,7 @@ do
 		then
 			break
 		else
-			kubectl get pods
-			kubectl logs webapp
-			kubectl describe pod webapp
+			pods_check
 			sleep $SLEEP_TIMER
 		fi
 		RETRY_CYCLES = $(expr $RETRY_CYCLES - 1)
