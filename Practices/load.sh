@@ -16,7 +16,7 @@ while true
 do
 	NUM=${USER:7:2}
 	echo "NUM=$NUM"
-	git stash
+	git stash drop
 	git pull
 	find ./ -name "*.y*ml" -exec sed -i -e "s/32000/320$NUM/g" {} \;
 	sleep 10
