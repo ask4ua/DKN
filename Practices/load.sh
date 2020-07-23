@@ -50,7 +50,7 @@ do
 	kubectl get pods -A
 	kubectl get namespaces
 	kubectl apply -f Section4/pod/webapp_pod.yaml
-	kubectl apply -f Section4/pod/db_podyaml
+	kubectl apply -f Section4/pod/db_pod.yaml
 	kubectl apply -f Section4/configmap/webapp_configmap.yaml
 	kubectl apply -f Section4/service/webapp_service.yaml
 	kubectl apply -f Section4/service/db_service.yaml
