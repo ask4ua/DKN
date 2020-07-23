@@ -6,7 +6,7 @@ pods_check(){
 
 	while true
 	do
-		if `kubectl get webapp | grep -i running`
+		if `kubectl get pod/webapp | grep -i running`
 		then
 			break
 		fi
