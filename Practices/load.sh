@@ -6,10 +6,11 @@ pods_check(){
 
 	while true
 	do
-		if `kubectl get pod/webapp | grep -i running`
+		if kubectl get pod/webapp | grep -i running > /dev/null
 		then
 			break
 		fi
+		pods_check
 		sleep 1
 	done
 
@@ -21,9 +22,7 @@ pods_delete(){
 }
 
 curl_check(){
-	RETRY_CYCLES=100
-	SLEEP_TIMER=1
-	while [ $RETRY_CYLES > 0 ]
+	while true
 	do
 	 	echo "another try to get http from webapp"
 		if `curl -X GET 10.5.11.203:320${NUM}`
@@ -33,7 +32,7 @@ curl_check(){
 			break
 		else
 			pods_check
-			sleep $SLEEP_TIMER
+			sleep 1
 		fi
 		RETRY_CYCLES = $(expr $RETRY_CYCLES - 1)
         done	
