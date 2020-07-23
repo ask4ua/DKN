@@ -13,6 +13,8 @@ pods_check(){
 		
 		if kubectl get pod/webapp | grep -i running >> /dev/null
 		then
+			echo ""
+			echo "Webapp Considered Raunning!"
 			break
 		fi
 		sleep 1
