@@ -1,4 +1,3 @@
-#!/bin/bash
 pods_check(){
 	while true
 	do
