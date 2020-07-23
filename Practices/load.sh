@@ -1,9 +1,9 @@
 #!/bin/bash
 pods_check(){
 	kubectl get pods
-	kubectl logs webapp
-	kubectl describe pod webapp
-}
+	kubectl logs webapp | tail -n 5
+	kubectl describe pod webapp | tail -n 5
+ }
 
 pods_delete(){
 	kubectl delete pod webapp
@@ -17,6 +17,7 @@ find ./ -name "*.y*ml" -exec sed -i -e "s/32000/320$NUM/g" {} \;
 while true
 do
 	sleep 10
+	kubectl delete namespace $USER
 	kubectl create namespace $USER
 	kubectl get pods -A
 	kubectl get namespaces
