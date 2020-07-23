@@ -41,6 +41,7 @@ do
 		if `curl -X GET 10.5.11.203:320${NUM}`
 		then
 			curl -X GET 10.5.11.203:320${NUM}
+			sleep 5
 			break
 		else
 			pods_check
