@@ -11,7 +11,7 @@ pods_check(){
 		echo "Events:"
 		kubectl describe pod webapp | tail -n 5
 		
-		if kubectl get pod/webapp | grep -i running > /dev/null
+		if kubectl get pod/webapp | grep -i running >> /dev/null
 		then
 			break
 		fi
