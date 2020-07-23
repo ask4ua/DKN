@@ -31,9 +31,8 @@ curl_check(){
 			break
 		else
 			pods_check
-			sleep 1
 		fi
-		RETRY_CYCLES = $(expr $RETRY_CYCLES - 1)
+		sleep 1
         done	
 }
 
@@ -46,7 +45,6 @@ while true
 do
 	kubectl delete namespace $USER
 	kubectl create namespace $USER
-	kubectl get pods -A
 	kubectl get namespaces
 	kubectl apply -f Section4/pod/webapp_pod.yaml
 	kubectl apply -f Section4/pod/db_pod.yaml
@@ -61,7 +59,7 @@ do
 
 	kubectl apply -f Section4/pod/webapp_pod_configmap_secret_init.yaml
 	kubectl apply -f Section4/pod/db_pod_secret_volume.yaml
-    pods_checl
+	pods_check
     curl_check 
 	sleep 10
 done
