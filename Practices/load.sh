@@ -2,8 +2,14 @@
 pods_check(){
 	while true
 	do
-	    kubectl get pods
+		echo ""
+	    echo "Pods:"
+		kubectl get pods
+		echo ""
+		echo "Logs:"
 		kubectl logs webapp | tail -n 5
+		echo ""
+		echo "Events:"
 		kubectl describe pod webapp | tail -n 5
 		
 		if kubectl get pod/webapp | grep -i running > /dev/null
