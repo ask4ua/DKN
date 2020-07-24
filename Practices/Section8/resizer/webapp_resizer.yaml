@@ -57,7 +57,7 @@ spec:
                 fieldPath: metadata.namespace
         command:
           - /pod_nanny	
-          - --container=kube-state-metrics
+          - --container=webapp
           - --cpu=100m
           - --extra-cpu=1m
           - --memory=100Mi
