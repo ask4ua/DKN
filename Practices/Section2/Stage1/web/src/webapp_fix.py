@@ -20,6 +20,7 @@ from jsonpath_ng import jsonpath, parse
 token_file="/var/run/secrets/kubernetes.io/serviceaccount/token"
 namespace_file="/var/run/secrets/kubernetes.io/serviceaccount/namespace"
 cacert_file="/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+pod_label="webapp"
 
 
 def read_text_from_file(filename):
@@ -134,7 +135,8 @@ class MyHandler(BaseHTTPRequestHandler):
 
         kube_api_pods_count=""
         try:
-            kube_api_pods_count=get_pod_ips(token_file,namespace_file,cacert_file,pod_label)
+            kube_api_pods_count=len(get_pods(token_file,namespace_file,cacert_file,pod_label))
+        
         except BaseException:
             print("No luck to access Kuber Api - please check service account and role assignment")
 
@@ -143,22 +145,24 @@ class MyHandler(BaseHTTPRequestHandler):
         <html><head><title>MyWebApp</title></head>
             <body>
                 <h2>
-                <p>Serving host %s</p>
-                <p></p>
-                <p>Time: %s</p>
-                <p>Accessed path: %s</p>
-                <p>Writing to DB status: %s</p></h2>
-                <hr>
-
-                <h3><p><a href="/load">Click to add some load</a></p></h3>
-        ''' % (str(HOST_NAME), str(time.asctime()), str(path), str(dbStatusHTML))
-        if load_str:
-            content += "<h3><p>Temp additional load was added: %s</p></h3>" % (str(load_str))
+                <p>Serving host %s</p>''' % (str(HOST_NAME))
         
         if kube_api_pods_count:
             content += "<h3><p>Total amount of webapp instances: </p></h3><h2>%s</h2>" % (str(kube_api_pods_count))
         else:
             content += "<p>Kube API is not available to check amount of webapp instances</p>"
+        
+        content += '''<p></p>
+                <p>Time: %s</p>
+                <p>Accessed path: %s</p>
+                <p>Writing to DB status: %s</p></h2>
+                <hr>
+
+                <h3><p><a href="/load">Click to add some load</a></p></h3>''' % ( str(time.asctime()), str(path), str(dbStatusHTML))
+        if load_str:
+            content += "<h3><p>Temp additional load was added: %s</p></h3>" % (str(load_str))
+        
+        
         content += '''
             </body>
         </html>
