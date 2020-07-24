@@ -158,7 +158,7 @@ class MyHandler(BaseHTTPRequestHandler):
         if kube_api_pods_count:
             content += "<h3><p>Total amount of webapp instances: </p></h3><h2>%s</h2>" % (str(kube_api_pods_count))
         else:
-            content += "<p>Kube api is not available to check amoint of webapp instances</p>"
+            content += "<p>Kube API is not available to check amount of webapp instances</p>"
         content += '''
             </body>
         </html>
