@@ -2,18 +2,18 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /	
+    nginx.ingress.kubernetes.io/rewrite-target: /
   name: webapp
-spec:
-  rules:
-  - host: camp.pro/studentXX
-    http:
+spec:	
+  rules:	
+  - host: camp.pro
+    http:	
       paths:
       - backend:
           serviceName: webapp
           servicePort: 80
-        path: /
+        path: studentXX/
       - backend:
           serviceName: webapp
           servicePort: 80
-        path: /webapp
+        path: studentXX/webapp
