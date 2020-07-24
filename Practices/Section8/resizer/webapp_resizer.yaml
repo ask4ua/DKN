@@ -63,4 +63,4 @@ spec:
           - --memory=100Mi
           - --extra-memory=10Mi
           - --threshold=5
-          - --deployment=kube-state-metrics
+          - --deployment=webapp
