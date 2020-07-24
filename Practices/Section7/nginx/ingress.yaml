@@ -12,8 +12,8 @@ spec:
       - backend:
           serviceName: webapp
           servicePort: 80
-        path: studentXX/
+        path: /studentXX/
       - backend:
           serviceName: webapp
           servicePort: 80
-        path: studentXX/webapp
+        path: /studentXX/webapp
