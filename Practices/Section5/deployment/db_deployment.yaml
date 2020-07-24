@@ -15,7 +15,6 @@ spec:
     metadata:
       labels:
         app: db
-
     spec:
       containers:
       - name: db
