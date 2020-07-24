@@ -14,7 +14,7 @@ Use precompiled vovolkov/webapp:fix docker image.
 1. Web app should consists of no less then 2 instances after successfull redeployment. 
 1. Web app should be redeployed keeping no less than 1 instance running during redeployment.
 1. Web app instances should be distributed as much as possible between different cluster nodes.
-1. Web app should be able to get via kuber API how many instances of Webapp are functional and running now based on pods with app:webapp lable.
+1. Web app should be able to get via kuber API how many instances of Webapp exist now based on count of pods with app:webapp label.
 1. Web app should be available via URL: web.app/studentXX/webapp/.
 
 #### DB

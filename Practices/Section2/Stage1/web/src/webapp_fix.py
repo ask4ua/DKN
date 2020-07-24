@@ -148,7 +148,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 <p>Serving host %s</p>''' % (str(HOST_NAME))
         
         if kube_api_pods_count:
-            content += "<h3><p>Total amount of webapp instances: </p></h3><h2>%s</h2>" % (str(kube_api_pods_count))
+            content += "<p><h3>Total amount of webapp instances: %s</h3></p>" % (str(kube_api_pods_count))
         else:
             content += "<p>Kube API is not available to check amount of webapp instances</p>"
         
