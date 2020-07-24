@@ -9,7 +9,7 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 2        # how many pods we can add at a time
+      maxSurge: 1        # how many pods we can add at a time
       maxUnavailable: 0
   selector:
     matchLabels:
@@ -19,6 +19,7 @@ spec:
       labels:
         app: webapp
     spec:
+      serviceAccountName: resizer
       containers:
       - name: webapp
         image: vovolkov/webapp:fix
