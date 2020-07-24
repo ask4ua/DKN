@@ -8,7 +8,7 @@ metadata:
   namespace: studentXX
 spec:	
   rules:	
-  - host: procamp/studentXX
+  - host: camp.pro/studentXX
     http:	
       paths:	
       - backend:	
