@@ -2,14 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-   app: webapp
+   app: webapp 
   name: webapp
 spec:
+  serviceAccount: getpods
   replicas: 3
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1        # how many pods we can add at a time
+      maxSurge: 2        # how many pods we can add at a time
       maxUnavailable: 0
   selector:
     matchLabels:
@@ -19,18 +20,6 @@ spec:
       labels:
         app: webapp
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - webapp
-              topologyKey: kubernetes.io/hostname
-            weight: 100
       containers:
       - name: webapp
         image: vovolkov/webapp:fix

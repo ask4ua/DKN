@@ -11,6 +11,58 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 HOST_NAME = str(socket.gethostname())
 PORT_NUMBER = 80
 
+import requests
+import sys
+import json
+import urllib.request
+from jsonpath_ng import jsonpath, parse
+
+token_file="/var/run/secrets/kubernetes.io/serviceaccount/token"
+namespace_file="/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+cacert_file="/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+
+
+def read_text_from_file(filename):
+
+        text=""
+        try:
+            print("Starting reading TEXT from file")
+            streamTextFile = open(str(filename), mode='rt', encoding='utf-8')
+            text = streamTextFile.read()
+
+            print("File " + str(filename) + " read - closing it")
+            streamTextFile.close()
+
+        except BaseException as exc:
+            print("File " + filename + "operations failed with exception: " + exc.__str__()[0:200])
+
+        return text
+
+def get_pods(token_file,namespace_file,cacert_file,pod_label):
+    token=read_text_from_file(token_file)
+    namespace=read_text_from_file(namespace_file)
+
+    pod_ips=[]
+
+    headers = {
+        'Authorization': 'Bearer ' +str(token),
+    }
+
+    url_server="https://kubernetes.default"
+    usr_path="/api/v1/namespaces/"+str(namespace)+"/pods?labelSelector=app=" + str(pod_label)
+
+    jsonpath_expression = parse('$.items[*].status.podIP')
+    try:
+        json_data=requests.get(str(url_server+usr_path),headers=headers, verify=cacert_file).json()
+    except Exception as exc:
+        print("File download " + str(url_server+usr_path) + " failed.")
+        raise BaseException
+
+    for match in jsonpath_expression.find(json_data):
+        pod_ips.append(match.value)
+
+    return pod_ips
+
 def connect_to_db():
     connection_status=False
 
@@ -80,6 +132,13 @@ class MyHandler(BaseHTTPRequestHandler):
             load_str="stress --vm 1 --vm-bytes 128M --timeout 10s"
             os.system(load_str)
 
+        kube_api_pods_count=""
+        try:
+            kube_api_pods_count=get_pod_ips(token_file,namespace_file,cacert_file,pod_label)
+        except BaseException:
+            print("No luck to access Kuber Api - please check service account and role assignment")
+
+
         content = '''
         <html><head><title>MyWebApp</title></head>
             <body>
@@ -95,6 +154,11 @@ class MyHandler(BaseHTTPRequestHandler):
         ''' % (str(HOST_NAME), str(time.asctime()), str(path), str(dbStatusHTML))
         if load_str:
             content += "<h3><p>Temp additional load was added: %s</p></h3>" % (str(load_str))
+        
+        if kube_api_pods_count:
+            content += "<h3><p>Total amount of webapp instances: </p></h3><h2>%s</h2>" % (str(kube_api_pods_count))
+        else:
+            content += "<p>Kube api is not available to check amoint of webapp instances</p>"
         content += '''
             </body>
         </html>
