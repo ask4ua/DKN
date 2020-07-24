@@ -5,7 +5,6 @@ metadata:
    app: webapp 
   name: webapp
 spec:
-  serviceAccountName: getpods
   replicas: 3
   strategy:
     type: RollingUpdate
@@ -20,6 +19,7 @@ spec:
       labels:
         app: webapp
     spec:
+      serviceAccountName: getpods
       containers:
       - name: webapp
         image: vovolkov/webapp:fix
