@@ -64,6 +64,13 @@ def get_pods(token_file,namespace_file,cacert_file,pod_label):
 
     return pod_ips
 
+def get_namespace(namespace_file):
+    try:
+        namespace=read_text_from_file(namespace_file)
+    except Exception:
+        namespace=""
+    return namespace
+
 def connect_to_db():
     connection_status=False
 
@@ -150,8 +157,12 @@ class MyHandler(BaseHTTPRequestHandler):
         if kube_api_pods_count:
             content += "<p><h3>Total amount of webapp instances: %s</h3></p>" % (str(kube_api_pods_count))
         else:
-            content += "<p>Kube API is not available to check amount of webapp instances</p>"
+            content += "<p><h5>Kube API is not able to check amount of webapp instances</h5></p>"
         
+        namespace=get_namespace(namespace_file)
+        if namespace:
+            content += "<p><h3>Kube namespace: %s</h3></p>" % (str(namespace))
+
         content += '''<p></p>
                 <p>Time: %s</p>
                 <p>Accessed path: %s</p>

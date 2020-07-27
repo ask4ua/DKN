@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+# kubernetes versions before 1.8.0 should use rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: {{.Release.Name}}-getpods
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{.Release.Name}}-getpods
+subjects:
+- kind: ServiceAccount
+  name: {{.Release.Name}}-getpods
+  namespace: {{.Release.Namespace}}

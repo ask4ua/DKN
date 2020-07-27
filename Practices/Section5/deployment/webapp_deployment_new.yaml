@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-   app: webapp_old
-  name: webapp
+   app: webapp 
+  name: webapp_new
 spec:
   replicas: 3
   strategy:
@@ -13,12 +13,12 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: webapp
+      app: webapp_new
   template:
     metadata:
       labels:
         app: webapp
-        rollout: webapp_old
+        rollout: webapp_new
     spec:
       containers:
       - name: webapp
