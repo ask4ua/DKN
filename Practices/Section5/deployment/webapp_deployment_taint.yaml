@@ -19,18 +19,10 @@ spec:
       labels:
         app: webapp
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - webapp
-              topologyKey: kubernetes.io/hostname
-            weight: 100
+      tolerations:
+      - key: noapp
+        operator: "Exists"
+        effect: "NoExecute"
       containers:
       - name: webapp
         image: vovolkov/webapp:fix
