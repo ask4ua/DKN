@@ -10,7 +10,7 @@ Prepare web application solution for one-shot deployment to kubernetes cluster.
 
 Use precompiled vovolkov/webapp:fix docker image.
 
-1. Web app should always be deplyed from the latest image version.
+1. Web app should always be deployed from the latest image version.
 1. Web app should consists of no less then 2 instances after successfull redeployment. 
 1. Web app should be redeployed keeping no less than 1 instance running during redeployment.
 1. Web app instances should be distributed as much as possible between different cluster nodes.
