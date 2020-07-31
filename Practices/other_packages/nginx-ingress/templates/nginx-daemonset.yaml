@@ -22,24 +22,24 @@ spec:
 # Windows affinity is looking useless for now
 # worker affinity is not needed and control plane is tuned to be not-schedulable, deployment doesn§t have corresponding tolerance
 #
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: beta.kubernetes.io/os
-                operator: In
-                values:
-                - linux
-              - key: node-role.kubernetes.io/worker
-                operator: Exists
-            - matchExpressions:
-              - key: beta.kubernetes.io/os
-                operator: In
-                values:
-                - linux
-              - key: "node-role.kubernetes.io/agent"
-                operator: Exists 
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: beta.kubernetes.io/os
+      #           operator: In
+      #           values:
+      #           - linux
+      #         - key: node-role.kubernetes.io/worker
+      #           operator: Exists
+      #       - matchExpressions:
+      #         - key: beta.kubernetes.io/os
+      #           operator: In
+      #           values:
+      #           - linux
+      #         - key: "node-role.kubernetes.io/agent"
+      #           operator: Exists 
       containers:
       - args:
         - /nginx-ingress-controller

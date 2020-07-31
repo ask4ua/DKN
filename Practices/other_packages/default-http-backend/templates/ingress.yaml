@@ -1,0 +1,30 @@
+# the application gateway needs an endpoint that will give a 200
+# response the endpoint needs to be listening on a hostname
+# that matches a listener in the gateway
+#
+# The default backend of the ingress controller is a good way 
+# to check the kube node health without depending on the app
+# 
+# The App gateway won't send the healthcheck unless the probe is
+# configured with a hostname that matches one of it's listeners
+#
+# so we send the host 'console.carbonite<env>.com'
+# and give an ingress rule to route /healthz to the ingress health container
+#
+# the secret should be in place from the rke setup
+#  
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: healthcheck
+spec:
+  rules:
+  - host: {{ .Values.global.APP_HOSTNAME }}	
+    http:
+      paths:
+      - backend:
+          serviceName: default-http-backend
+          servicePort: 80
+        path: /healthz
+
