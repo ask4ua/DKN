@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: vovolkov/db
+  repository: docker.ask4ua.com/db
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
