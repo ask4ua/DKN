@@ -54,6 +54,8 @@ Mac OS/linux:
 export NUM_VMS=3
 ```
 
+Don't forget to set one always before work (especially after reboot)!
+
 # Start
 ```
 vagrant up
