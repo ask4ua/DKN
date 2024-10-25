@@ -1,25 +1,41 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure("2") do |config|
-  config.vm.box = "hashicorp/bionic64"
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
-  config.vm.network "forwarded_port", guest: 8081, host: 8081
-  config.vm.network "forwarded_port", guest: 8082, host: 8082
+# Vagrantfile for setting up 1 or 3 VMs with Docker and port forwarding
 
-  config.vm.provider "virtualbox" do |vb|
-      vb.cpus = 2 
-      vb.memory = "2048"
+# Read the number of VMs from an environment variable, default to 1 if not set
+num_vms = ENV.fetch("NUM_VMS", 1).to_i
+
+Vagrant.configure("2") do |config|
+  (1..num_vms).each do |i|
+    config.vm.define "vm#{i}" do |vm_config|
+      vm_config.vm.box = "hashicorp/bionic64"
+
+      vm_config.vm.hostname = "vm#{i}"
+
+      vm_config.vm.network "private_network", ip: "192.168.56.#{10 + i}"
+
+      vm_config.vm.network "forwarded_port", guest: 8080, host: 8080 + 100*i
+      vm_config.vm.network "forwarded_port", guest: 8081, host: 8081 + 100*i
+      vm_config.vm.network "forwarded_port", guest: 8082, host: 8082 + 100*i
+      vm_config.vm.network "forwarded_port", guest: 5432, host: 5032 + 100*i
+
+      vm_config.vm.provider "virtualbox" do |vb|
+          vb.cpus = 1 
+          vb.memory = "512"
+      end
+      
+      vm_config.vm.disk :disk, size: "10GB", primary: true
+
+      vm_config.vm.provision "shell", inline: <<-SHELL
+        apt-get update -y; apt-get upgrade -y
+        apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        apt-get install -y docker-ce docker-ce-cli containerd.io
+        apt-get install -y bridge-utils
+        adduser vagrant docker
+      SHELL
+    end
   end
-  
-  config.vm.provision "shell", inline: <<-SHELL
-     apt-get update -y
-     apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-     apt-get update -y
-     apt-get install -y docker-ce docker-ce-cli containerd.io
-     apt-get install -y bridge-utils
-     adduser vagrant docker
-  SHELL
 end
