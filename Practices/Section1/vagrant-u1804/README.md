@@ -3,6 +3,17 @@ Windows, Linux, Intel Mac.
 
 Arm MacOS - sorry, but not yet.
 
+# Checkout the Repo
+
+Please checkout this repo:
+```
+git clone git@github.com:ask4ua/DKN.git
+```
+and naviaget to the folder inside:
+```
+Practices/Section1/vagrant-u1804/
+```
+
 # Install Virtualbox
 On Windows: install VBox 7.0: https://download.virtualbox.org/virtualbox/7.0.22/VirtualBox-7.0.22-165102-Win.exe
 
