@@ -56,7 +56,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
         load_str=""
         if "load" in path.lower():
-            load_str="stress --vm 1 --vm-bytes 128M --timeout 10s"
+            load_str="stress --cpu 1 --vm-bytes 128M --timeout 60s"
             os.system(load_str)
 
         content = '''

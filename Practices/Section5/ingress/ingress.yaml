@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapp
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: webapp.k8s.ask4ua.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: webapp
+            port:
+              number: 80
+        path: /student
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - webapp.k8s.ask4ua.com
