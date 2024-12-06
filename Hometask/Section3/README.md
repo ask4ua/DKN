@@ -14,8 +14,12 @@ Use precompiled vovolkov/webapp:fix docker image.
 1. Web app should consists of no less then 2 instances after successfull redeployment. 
 1. Web app should be redeployed keeping no less than 1 instance running during redeployment.
 1. Web app instances should be distributed as much as possible between different cluster nodes.
-1. Web app should be able to get via kuber API how many instances of Webapp exist now based on count of pods with app:webapp label.
-1. Web app should be available via URL: web.app/studentXX/webapp/.
+1. ~~Web app should be able to get via kuber API how many instances of Webapp exist now based on count of pods with app:webapp label.~~
+1. Web app should be available via URL: webapp.k8s.ask4ua.com and pathes (# - student number):
+ * /student# -> webapp: /student#
+ * /api/st# -> webapp: ~~/api~~/st#
+ * /api/st#/wqesd -> webapp: ~~/api~~/st#/wqesd
+ 
 
 #### DB
 
@@ -26,7 +30,7 @@ Use precompiled vovolkov/db docker image.
 
 #### Common Assumptions
 
-1. Application should be secure enough using non-default image secrets.
+1. Application should be secured enough using non-default image secrets.
 
 ### Output Format
 
